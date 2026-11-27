@@ -17,5 +17,10 @@ if (!existsSync(source)) {
 
 mkdirSync(outDir, { recursive: true });
 const target = join(outDir, "entry.png");
-copyFileSync(source, target);
+try {
+  copyFileSync(source, target);
+} catch (error) {
+  console.error(`failed to copy entry.png to ${target}: ${error instanceof Error ? error.message : error}`);
+  process.exit(1);
+}
 console.log(`wrote ${target}`);
